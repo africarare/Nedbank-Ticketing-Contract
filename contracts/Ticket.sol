@@ -21,13 +21,11 @@ contract Ticket is ERC721URIStorage, Ownable {
     isAllowListActive = _isAllowListActive;
   }
 
-  function mintToken(address[] calldata receiverAddress, string memory tokenURI) public onlyOwner {
+  function mintToken(address receiverAddress, string memory tokenURI) public onlyOwner {
     uint256 newItemId = _tokenIds.current();
     _tokenIds.increment();
 
-    for(uint i = 0; i < receiverAddress.length; i++) {
-      _safeMint(receiverAddress[i], newItemId);
-    }
+    _safeMint(receiverAddress, newItemId);
     _setTokenURI(newItemId, tokenURI);
   }
 }
