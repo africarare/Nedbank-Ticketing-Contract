@@ -17,10 +17,6 @@ contract Ticket is ERC721URIStorage, Ownable {
 
   constructor() ERC721('NEDBankTicket', 'NED') {}
 
-  function setIsAllowListActive(bool _isAllowListActive) external onlyOwner {
-    isAllowListActive = _isAllowListActive;
-  }
-
   function mintToken(address receiverAddress, string memory tokenURI) public onlyOwner {
     uint256 newItemId = _tokenIds.current();
     _tokenIds.increment();
