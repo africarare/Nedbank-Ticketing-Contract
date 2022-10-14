@@ -17,11 +17,13 @@ contract Ticket is ERC721URIStorage, Ownable {
 
   constructor() ERC721('NEDBankTicket', 'NED') {}
 
-  function mintToken(address receiverAddress, string memory tokenURI) public onlyOwner {
+  function mintToken(address[] calldata receiverAddress, string memory tokenURI) public onlyOwner {
     uint256 newItemId = _tokenIds.current();
     _tokenIds.increment();
 
-    _safeMint(receiverAddress, newItemId);
+    for(uint i = 0; i < receiverAddress.length; i++) {
+      _safeMint(receiverAddress[i], newItemId);
+    }
     _setTokenURI(newItemId, tokenURI);
   }
 }
