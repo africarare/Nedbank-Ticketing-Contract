@@ -1,9 +1,17 @@
 {
   "name": "NGC Genesis NFT",
   "description": "The Nedbank Golf Challenge Genesis NFT has a single purpose use and can be exchanged for 2 physical tickets at the Nedbank Golf Challenge at Sun City.",
-  "date": "10 November 2022",
-  "image": "./_dist/MM01526 13 NOV 2022 - 05.gif",
-  "id": 5,
-  "external_url": " https://africarare.io",
-  "collection": "Africarare - Nedbank Metaverse"
+  "image": "https://bafybeidsoqbckwqcj3jq4s432xcyh4ltpo5nfwjmk7b476edbiyr56klxm.ipfs.nftstorage.link/ipfs/bafybeidsoqbckwqcj3jq4s432xcyh4ltpo5nfwjmk7b476edbiyr56klxm/nedbank-golf-challenge-ticket-5.gif",
+  "external_url": "https://africarare.io",
+  "attributes": [
+    {
+      "trait_type": "collection",
+      "value": "Africarare - Nedbank Metaverse"
+    },
+    {
+      "display_type": "date",
+      "trait_type": "date",
+      "value": "10 November 2022"
+    }
+  ]
 }
