@@ -19,10 +19,10 @@ describe("Ticket", () => {
     it("Should mint token", async function () {
       const headurl = "https://bafybeiapj4f5pbsygydhq4ds5qevobdj3wjvdoybpkr6gctynwegqokbzq.ipfs.nftstorage.link/";
       const tailurl = ".json"
-      await ticketContract.connect(owner).mintToken([toAddress.address, addr1.address]);
+      await ticketContract.connect(owner).mintToken(addr1.address, 2);
 
       expect(await ticketContract.tokenURI(1)).to.equal(headurl + "1" + tailurl);
-      expect(await ticketContract.ownerOf(1)).to.equal(toAddress.address);
+      expect(await ticketContract.ownerOf(1)).to.equal(addr1.address);
       expect(await ticketContract.tokenURI(2)).to.equal(headurl + "2" + tailurl);
       expect(await ticketContract.ownerOf(2)).to.equal(addr1.address);
     });

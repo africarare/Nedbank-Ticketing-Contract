@@ -14,16 +14,15 @@ contract Ticket is ERC721URIStorage, Ownable {
 
     constructor() ERC721("NEDBankTicket", "NED") {}
 
-    //Tracks num minted
     uint256 public numMinted = 0;
+    uint256 public maxSupply = 126;
+    mapping(uint256 => string) private _tokenURIs;
 
-    //Sets the URI base and head for where metadata is located on IPFS
     string public _baseURIextended =
         "https://bafybeiapj4f5pbsygydhq4ds5qevobdj3wjvdoybpkr6gctynwegqokbzq.ipfs.nftstorage.link/";
     string public _headURIextended = ".json";
 
-    // Mapping for token URIs
-    mapping(uint256 => string) private _tokenURIs;
+    error SupplyCapExceeded();
 
     /**
      * @dev returns base URI
@@ -64,6 +63,21 @@ contract Ticket is ERC721URIStorage, Ownable {
         _tokenURIs[tokenId] = Strings.toString(tokenId);
     }
 
+    function beforeNonExceededSupplyCap(
+        uint256 _numToMint,
+        uint256 _numMinted,
+        uint256 _maxSupply
+    ) internal pure {
+        if (_numMinted + _numToMint > _maxSupply) {
+            revert SupplyCapExceeded();
+        }
+    }
+
+    modifier nonExceededSupplyCap(uint256 numToMint) {
+        beforeNonExceededSupplyCap(numToMint, numMinted, maxSupply);
+        _;
+    }
+
     /**
      * @dev gets token URI
      */
@@ -88,10 +102,14 @@ contract Ticket is ERC721URIStorage, Ownable {
             );
     }
 
-    function mintToken(address[] calldata receiverAddress) public onlyOwner {
-        for (uint256 i = 0; i < receiverAddress.length; i++) {
+    function mintToken(address receiverAddress, uint256 amount)
+        public
+        onlyOwner
+        nonExceededSupplyCap(amount)
+    {
+        for (uint256 i = 0; i < amount; i++) {
             _tokenIds.increment();
-            _safeMint(receiverAddress[i], _tokenIds.current());
+            _safeMint(receiverAddress, _tokenIds.current());
         }
         _setTokenURI(_tokenIds.current(), "");
     }
