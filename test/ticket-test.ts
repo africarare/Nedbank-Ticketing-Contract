@@ -17,14 +17,14 @@ describe("Ticket", () => {
 
   describe("Mint token", () => {
     it("Should mint token", async function () {
-      const baseurl = "africarare.io";
-      ticketContract.connect(owner).setBaseURI(baseurl);
+      const headurl = "https://gateway.pinata.cloud/ipfs/QmfS1tJoY1ZpHpa7RJvziV7MoRc6NXrHWARrWt7pdXAXwQ/NEDBankTicket_";
+      const tailurl = ".json"
+      await ticketContract.connect(owner).mintToken([toAddress.address, addr1.address]);
 
-      await ticketContract.connect(owner).setIsAllowListActive(true);
-      await ticketContract.connect(owner).mintToken(toAddress, baseurl);
-
-      expect(await ticketContract.tokenURI(0)).to.equal(baseurl + "0");
-      expect(await ticketContract.ownerOf(0)).to.equal(addr1.address);
+      expect(await ticketContract.tokenURI(1)).to.equal(headurl + "1" + tailurl);
+      expect(await ticketContract.ownerOf(1)).to.equal(toAddress.address);
+      expect(await ticketContract.tokenURI(2)).to.equal(headurl + "2" + tailurl);
+      expect(await ticketContract.ownerOf(2)).to.equal(addr1.address);
     });
   });
 });
