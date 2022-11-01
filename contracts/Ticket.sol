@@ -19,7 +19,7 @@ contract Ticket is ERC721URIStorage, Ownable {
 
     //Sets the URI base and head for where metadata is located on IPFS
     string public _baseURIextended =
-        "https://gateway.pinata.cloud/ipfs/QmfS1tJoY1ZpHpa7RJvziV7MoRc6NXrHWARrWt7pdXAXwQ/NEDBankTicket_";
+        "https://bafybeiapj4f5pbsygydhq4ds5qevobdj3wjvdoybpkr6gctynwegqokbzq.ipfs.nftstorage.link/";
     string public _headURIextended = ".json";
 
     // Mapping for token URIs

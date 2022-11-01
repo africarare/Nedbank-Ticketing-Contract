@@ -17,7 +17,7 @@ describe("Ticket", () => {
 
   describe("Mint token", () => {
     it("Should mint token", async function () {
-      const headurl = "https://gateway.pinata.cloud/ipfs/QmfS1tJoY1ZpHpa7RJvziV7MoRc6NXrHWARrWt7pdXAXwQ/NEDBankTicket_";
+      const headurl = "https://bafybeiapj4f5pbsygydhq4ds5qevobdj3wjvdoybpkr6gctynwegqokbzq.ipfs.nftstorage.link/";
       const tailurl = ".json"
       await ticketContract.connect(owner).mintToken([toAddress.address, addr1.address]);
 
