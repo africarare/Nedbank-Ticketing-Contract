@@ -1,20 +1,26 @@
 import { run } from "hardhat";
-import { ethers } from "hardhat";
+import { TICKETING_CONTRACT_ADDRESS } from '../deployments/deploy';
+
+
 
 async function main() {
-  console.log("verifying contracts...");
+  console.log('verifying contracts...');
 
-  console.log("verifying ticket factory contract on etherscan..");
-  await run("verify:verify", {
-    address: `0xD6dd8Bfb3F46916Eb7205FBAa7E46d666eE78E11`,
-    contract: await ethers.getContractFactory("Ticket"),
+  console.log("verifying token contract on etherscan..");
+  await run('verify:verify', {
+    address: `${TICKETING_CONTRACT_ADDRESS}`,
+    contract: "contracts/Ticket.sol:Ticket",
     constructorArguments: [],
-  });
-  console.log("verified");
+  })
+  console.log('verified');
 
-  console.log("contract verification is done");
+  console.log('done verifying contracts');
+
 }
 
+
+// We recommend this pattern to be able to use async/await everywhere
+// and properly handle errors.
 main().catch((error) => {
   console.error(error);
   process.exitCode = 1;

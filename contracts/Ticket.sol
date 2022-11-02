@@ -126,6 +126,7 @@ contract Ticket is ERC721, Ownable {
     {
         for (uint256 i = 0; i < amount; i++) {
             _tokenIds.increment();
+            numMinted++;
             _safeMint(receiverAddress, _tokenIds.current());
             _setTokenURI(_tokenIds.current());
         }
