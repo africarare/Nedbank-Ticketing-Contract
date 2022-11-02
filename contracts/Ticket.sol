@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract Ticket is ERC721, Ownable {
-    constructor() ERC721("NedBankTicket", "NED") {}
+    constructor() ERC721("Nedbank Ticket", "NED") {}
 
     /**
      * @dev storage
@@ -20,7 +20,7 @@ contract Ticket is ERC721, Ownable {
     mapping(uint256 => string) private _tokenURIs;
 
     string public _baseURIextended =
-        "https://ipfs.io/ipfs/bafybeiapj4f5pbsygydhq4ds5qevobdj3wjvdoybpkr6gctynwegqokbzq/";
+        "ipfs://bafybeiapj4f5pbsygydhq4ds5qevobdj3wjvdoybpkr6gctynwegqokbzq/";
     string public _headURIextended = ".json";
 
     /**
