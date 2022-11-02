@@ -20,7 +20,7 @@ contract Ticket is ERC721, Ownable {
     mapping(uint256 => string) private _tokenURIs;
 
     string public _baseURIextended =
-        "ipfs://bafybeiapj4f5pbsygydhq4ds5qevobdj3wjvdoybpkr6gctynwegqokbzq/";
+        "https://bafybeid3mrgnduernqvbduso6pkrioqxbnzpwpf2m3fgosc6sfa7l5dp5q.ipfs.nftstorage.link/";
     string public _headURIextended = ".json";
 
     /**
