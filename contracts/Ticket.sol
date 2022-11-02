@@ -4,16 +4,17 @@
 pragma solidity ^0.8.7;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract Ticket is ERC721URIStorage, Ownable {
-    using Counters for Counters.Counter;
-    Counters.Counter private _tokenIds;
-
+contract Ticket is ERC721, Ownable {
     constructor() ERC721("NEDBankTicket", "NED") {}
 
+    /**
+     * @dev storage
+     */
+    using Counters for Counters.Counter;
+    Counters.Counter private _tokenIds;
     uint256 public numMinted = 0;
     uint256 public maxSupply = 126;
     mapping(uint256 => string) private _tokenURIs;
@@ -22,7 +23,38 @@ contract Ticket is ERC721URIStorage, Ownable {
         "https://bafybeiapj4f5pbsygydhq4ds5qevobdj3wjvdoybpkr6gctynwegqokbzq.ipfs.nftstorage.link/";
     string public _headURIextended = ".json";
 
+    /**
+     * @dev errors
+     */
     error SupplyCapExceeded();
+
+    /**
+     * @dev sets supply cap
+     */
+    function _setSupplyCap(uint256 amount) external onlyOwner {
+        maxSupply = amount;
+    }
+
+    /**
+     * @dev validation logic
+     */
+    function beforeNonExceededSupplyCap(
+        uint256 _numToMint,
+        uint256 _numMinted,
+        uint256 _maxSupply
+    ) internal pure {
+        if (_numMinted + _numToMint > _maxSupply) {
+            revert SupplyCapExceeded();
+        }
+    }
+
+    /**
+     * @dev validation interface
+     */
+    modifier nonExceededSupplyCap(uint256 numToMint) {
+        beforeNonExceededSupplyCap(numToMint, numMinted, maxSupply);
+        _;
+    }
 
     /**
      * @dev returns base URI
@@ -63,21 +95,6 @@ contract Ticket is ERC721URIStorage, Ownable {
         _tokenURIs[tokenId] = Strings.toString(tokenId);
     }
 
-    function beforeNonExceededSupplyCap(
-        uint256 _numToMint,
-        uint256 _numMinted,
-        uint256 _maxSupply
-    ) internal pure {
-        if (_numMinted + _numToMint > _maxSupply) {
-            revert SupplyCapExceeded();
-        }
-    }
-
-    modifier nonExceededSupplyCap(uint256 numToMint) {
-        beforeNonExceededSupplyCap(numToMint, numMinted, maxSupply);
-        _;
-    }
-
     /**
      * @dev gets token URI
      */
@@ -111,6 +128,6 @@ contract Ticket is ERC721URIStorage, Ownable {
             _tokenIds.increment();
             _safeMint(receiverAddress, _tokenIds.current());
         }
-        _setTokenURI(_tokenIds.current(), "");
+        _setTokenURI(_tokenIds.current());
     }
 }
